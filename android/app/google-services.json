@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "234387073213",
+    "project_id": "mpnjmfluttercourse",
+    "storage_bucket": "mpnjmfluttercourse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234387073213:android:81affb2c3cd2242ef52fd4",
+        "android_client_info": {
+          "package_name": "fr.jomoreschi.myprivatenotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234387073213-n0avekpbh4tlqca6k8fjqr53sserk4d5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp8bRJPlJHk1VBCKbv7AYZWUeBK-RC86Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234387073213-n0avekpbh4tlqca6k8fjqr53sserk4d5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
