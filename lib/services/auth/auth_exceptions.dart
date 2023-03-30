@@ -1,3 +1,5 @@
+// create custom Exceptions classes to be called in the provider
+
 // login exceptions
 class UserNotFoundAuthException implements Exception {}
 
