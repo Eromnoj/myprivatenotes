@@ -8,7 +8,8 @@ class AuthUser {
   // create an boolean attribute
   final bool isEmailVerified;
   // construct the class, giving a value to the attrbute
-  const AuthUser(this.isEmailVerified);
+  const AuthUser({required this.isEmailVerified});
 
-  factory AuthUser.fromFirebase(User user) => AuthUser(user.emailVerified);
+  factory AuthUser.fromFirebase(User user) =>
+      AuthUser(isEmailVerified: user.emailVerified);
 }
