@@ -14,11 +14,17 @@ class NoteService {
 
   // creating a singleton
   static final NoteService _shared = NoteService._sharedInstance();
-  NoteService._sharedInstance();
+  NoteService._sharedInstance() {
+    _notesStreamController = StreamController<List<DatabaseNote>>.broadcast(
+      onListen: () {
+        _notesStreamController.sink.add(_notes);
+      },
+    );
+  }
   factory NoteService() => _shared;
 
-  final _notesStreamController =
-      StreamController<List<DatabaseNote>>.broadcast();
+  late final StreamController<List<DatabaseNote>> _notesStreamController;
+
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
 
   Future<DatabaseUser> getOrCreateUser({required String email}) async {
@@ -49,16 +55,22 @@ class NoteService {
 // make sure note exists
     await getNote(id: note.id);
     // update DB
-    final updatesCount = await db.update(noteTable, {
-      textColumn: text,
-      isSyncedWithCloudColumn: 0,
-    });
+    final updatesCount = await db.update(
+      noteTable,
+      {
+        textColumn: text,
+        isSyncedWithCloudColumn: 0,
+      },
+      where: 'id = ?',
+      whereArgs: [note.id],
+    );
 
     if (updatesCount == 0) {
       throw CouldNotUpdateNote();
     } else {
       final updatedNote = await getNote(id: note.id);
       _notes.removeWhere((note) => note.id == updatedNote.id);
+      _notes.add(updatedNote);
       _notesStreamController.add(_notes);
       return updatedNote;
     }
@@ -133,9 +145,8 @@ class NoteService {
     await _ensureDbIsOpen();
     final db = _getDatabaseOrThrow();
 
-    final dbUser = await getUser(email: owner.email);
-
     // make sure owner exists in db with the correct ID
+    final dbUser = await getUser(email: owner.email);
     if (dbUser != owner) {
       throw CouldNotFindUser();
     }
@@ -307,7 +318,7 @@ class DatabaseNote {
 
   @override
   String toString() =>
-      'Note, ID = $id, userId = $userId, isSyncedWithCloud = $isSyncedWithCloud';
+      'Note, ID = $id, userId = $userId, isSyncedWithCloud = $isSyncedWithCloud, text = $text';
 
   @override
   bool operator ==(covariant DatabaseNote other) => id == other.id;
@@ -317,7 +328,7 @@ class DatabaseNote {
 }
 
 // const to reference to the db
-const dbName = 'notes.db';
+const dbName = 'notes2.db';
 // cont to reference to the tables
 const noteTable = 'note';
 const userTable = 'user';
@@ -338,6 +349,6 @@ const createNoteTable = '''CREATE TABLE IF NOT EXISTS "note" (
 	      "user_id"	INTEGER NOT NULL,
 	      "text"	TEXT,
 	      "is_synced_with_cloud"	INTEGER NOT NULL DEFAULT 0,
-	      PRIMARY KEY("id","is_synced_with_cloud"),
-	      FOREIGN KEY("user_id") REFERENCES "user"("id")
+	      FOREIGN KEY("user_id") REFERENCES "user"("id"),
+	      PRIMARY KEY("id" AUTOINCREMENT)
       );''';
