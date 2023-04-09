@@ -4,7 +4,6 @@ import 'package:myprivatenotes/utilities/dialogs/cannot_share_empty_note_dialog.
 import 'package:myprivatenotes/utilities/generics/get_arguments.dart';
 import 'package:myprivatenotes/services/cloud/cloud_note.dart';
 import 'package:myprivatenotes/services/cloud/firebase_cloud_storage.dart';
-import 'package:myprivatenotes/services/cloud/cloud_storage_exceptions.dart';
 import 'package:share_plus/share_plus.dart';
 
 class CreateUpdateNoteView extends StatefulWidget {
