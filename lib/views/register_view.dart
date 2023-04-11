@@ -6,8 +6,8 @@ import 'package:myprivatenotes/services/auth/auth_service.dart';
 import 'package:myprivatenotes/services/auth/bloc/auth_event.dart';
 import 'package:myprivatenotes/utilities/dialogs/error_dialog.dart';
 
-import '../services/auth/bloc/auth_bloc.dart';
-import '../services/auth/bloc/auth_state.dart';
+import 'package:myprivatenotes/services/auth/bloc/auth_bloc.dart';
+import 'package:myprivatenotes/services/auth/bloc/auth_state.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
