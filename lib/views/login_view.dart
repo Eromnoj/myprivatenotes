@@ -52,49 +52,61 @@ class _LoginViewState extends State<LoginView> {
       },
       child: Scaffold(
         appBar: AppBar(title: const Text('Login')),
-        body: Column(
-          children: [
-            TextField(
-              // use the created states in the controller of the textField
-              controller: _email,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                hintText: 'Enter your email here',
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const Text(
+                  'Please log in to your account in order to creates notes!'),
+              TextField(
+                // use the created states in the controller of the textField
+                controller: _email,
+                enableSuggestions: false,
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  hintText: 'Enter your email here',
+                ),
               ),
-            ),
-            TextField(
-              controller: _password,
-              // options for password fields
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: const InputDecoration(
-                hintText: 'Enter your password here',
+              TextField(
+                controller: _password,
+                // options for password fields
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  hintText: 'Enter your password here',
+                ),
               ),
-            ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                context.read<AuthBloc>().add(
-                      AuthEventLogIn(
-                        email,
-                        password,
-                      ),
-                    );
-              },
-              child: const Text('Login'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Calling a named route
-                context.read<AuthBloc>().add(const AuthEventShouldRegister());
-              },
-              child: const Text('Not registered yet ? Register here'),
-            )
-          ],
+              TextButton(
+                onPressed: () async {
+                  final email = _email.text;
+                  final password = _password.text;
+                  context.read<AuthBloc>().add(
+                        AuthEventLogIn(
+                          email,
+                          password,
+                        ),
+                      );
+                },
+                child: const Text('Login'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Calling a named route
+                  context.read<AuthBloc>().add(const AuthEventForgotPassword());
+                },
+                child: const Text('I forgot my password'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Calling a named route
+                  context.read<AuthBloc>().add(const AuthEventShouldRegister());
+                },
+                child: const Text('Not registered yet ? Register here'),
+              ),
+            ],
+          ),
         ),
       ),
     );
